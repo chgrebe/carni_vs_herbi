@@ -1,6 +1,8 @@
 require_relative 'settings.rb'
 
 class Plant
+	attr_accessor :x, :y
+
 	def initialize(window)
 		@window = window
 		@tiles = Gosu::Image::load_tiles(window, "media/carrot_animated.png", 40, 40, false)
@@ -13,7 +15,7 @@ class Plant
 	end
 
 	def draw
-		current_tile = Gosu::milliseconds / 1000 % @tiles.size
-		@tiles[current_tile].draw(@x, @y, ZOrder::Plants, 0.5, 0.5)
+		draw_angle = Gosu::milliseconds / 5 % 360
+		@tiles[0].draw_rot(@x, @y, ZOrder::Plants, draw_angle, 0.5, 0.5, 0.75, 0.75)
 	end
 end

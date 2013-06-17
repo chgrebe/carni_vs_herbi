@@ -28,11 +28,30 @@ class Carnivore
 	def move
 		@x += @vel_x
 		@y += @vel_y
-		@x %= Sim::Width
-		@y %= Sim::Height
+
+		if @x > Sim::Width
+			@x = Sim::Width
+			@angle += 90
+		elsif @x < 0
+			@angle += 90
+			@x = 0 
+		elsif @y > Sim::Height
+			@y = Sim::Height
+			@angle += 90
+		elsif @y < 0
+			@y = 0
+			@angle += 90
+		end
+		#@x %= Sim::Width
+		#@y %= Sim::Height
 
 		@vel_x *= 0.95
 		@vel_y *= 0.95
+	end
+
+	def simulate_tick
+		move
+		
 	end
 
 	def draw

@@ -1,6 +1,7 @@
 require_relative 'settings'
 
 class Herbivore
+	attr_accessor :age, :hunger, :x, :y
 	Acceleration = 0.8
 	#Max_Speed = 15
 	Fixed_Turn_Angle = 40
@@ -12,11 +13,42 @@ class Herbivore
 		@window = window
 		@image = Gosu::Image.new(window, "media/Bunny.png", false)
 		@x = @y = @vel_x = @vel_y = @angle = 0.0
+		@age = 0
+		@hunger = 0
 	end
 
 	def warp(x, y)
 		@x, @y = x, y
 	end
+
+	def simulate_tick
+		move
+		eat!
+		#find_mate
+		if Gosu::milliseconds % 60 == 0
+			@age += 1 
+			@hunger += 1
+		end
+	end
+
+	def draw
+		@image.draw_rot(@x, @y, 1, @angle + 90, 0.5, 0.5, Image_Scale_X, Image_Scale_Y)
+	end
+
+	def eat!
+		$plants.reject! do |p|
+			if @hunger != 0
+				d = Gosu::distance(@x, @y, p.x, p.y)
+				if d < Herbi::Eat_Range
+					@hunger = 0
+					#true
+				else
+					false
+				end
+			end
+		end
+	end
+
 
 	def accelerate
 		@vel_x += Gosu::offset_x(@angle, Acceleration)
@@ -36,11 +68,26 @@ class Herbivore
 		
 		@x += @vel_x
 		@y += @vel_y
-		@x %= Sim::Width
-		@y %= Sim::Height
+
+		if @x > Sim::Width
+			@x = Sim::Width - 3
+			@angle += 180
+		elsif @x < 0
+			@x = 3
+			@angle += 180
+		elsif @y > Sim::Height
+			@y = Sim::Height - 3
+			@angle += 180
+		elsif @y < 0
+			@y = 3
+			@angle += 180
+		end
+
+		#@x %= Sim::Width
+		#@y %= Sim::Height
 	end
 
-
+	
 	def change_direction
 		r = rand(100)
 		if r > 90
@@ -54,7 +101,4 @@ class Herbivore
 		end
 	end
 
-	def draw
-		@image.draw_rot(@x, @y, 1, @angle, 0.5, 0.5, Image_Scale_X, Image_Scale_Y)
-	end
 end
