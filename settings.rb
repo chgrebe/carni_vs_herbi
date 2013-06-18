@@ -11,5 +11,5 @@ end
 module Herbi
 	Max_Age = 30
 	Max_Hunger = 5
-	Eat_Range = 50
+	Eat_Range = 30
 end

@@ -3,7 +3,7 @@ require_relative 'settings'
 require_relative 'carnivore'
 require_relative 'herbivore'
 require_relative 'plant'
-
+require_relative 'info_bar'
 
 class SimWindow < Gosu::Window
   def initialize
@@ -18,13 +18,25 @@ class SimWindow < Gosu::Window
     initialize_plants
     initialize_herbies
     initialize_carnies
-    @info_bar = Gosu::Image::from_text(self, "Herbivores: #{@herbies.size}  Carnivores: #{@carnies.size} ", "Courier New Bold", 32, 16, Sim::Width, :left) 
+
+    @fps = 0
+    @info_bar_text = "Herbivores: #{@herbies.size}  Carnivores: #{@carnies.size} " +\
+    "FPS: #{@fps}"
+    @info_bar = InfoBar.new(self, 10, 10)
+    
   end
   
   def update
     @herbies.each { |h| h.simulate_tick }
     @carnies.each { |c| c.simulate_tick }
     remove_starved_and_old_animals!
+    update_info_bar
+  end
+
+  def update_info_bar
+    @fps = Gosu::fps
+    @info_bar_text = "Herbivores: #{@herbies.size}   Carnivores: #{@carnies.size}" +\
+    "   Plants: #{$plants.size}   FPS: #{@fps}"
   end
 
   def remove_starved_and_old_animals!
@@ -38,11 +50,12 @@ class SimWindow < Gosu::Window
     bg_x_factor = Sim::Width.to_f / @background_image.width.to_f
     bg_y_factor = Sim::Height.to_f / @background_image.height.to_f
     @background_image.draw(0, 0, 0, bg_x_factor, bg_y_factor)
-    @info_bar.draw(10, 10, ZOrder::Info_Bar)
+    @info_bar.draw(@info_bar_text)
 
     $plants.each { |h| h.draw }
     @herbies.each { |h| h.draw }
     @carnies.each { |h| h.draw }
+    
     
   end
 
@@ -62,7 +75,7 @@ class SimWindow < Gosu::Window
   end
 
   def initialize_carnies
-    
+
   end
 
   def button_down(id)

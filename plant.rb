@@ -16,6 +16,6 @@ class Plant
 
 	def draw
 		draw_angle = Gosu::milliseconds / 5 % 360
-		@tiles[0].draw_rot(@x, @y, ZOrder::Plants, draw_angle, 0.5, 0.5, 0.75, 0.75)
+		@tiles[0].draw_rot(@x, @y, ZOrder::Plants, draw_angle, 0.5, 0.5, 0.6, 0.6)
 	end
 end
