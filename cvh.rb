@@ -20,9 +20,9 @@ class SimWindow < Gosu::Window
     initialize_carnies
 
     @fps = 0
-    @info_bar_text = "Herbivores: #{@herbies.size}  Carnivores: #{@carnies.size} " +\
-    "FPS: #{@fps}"
-    @info_bar = InfoBar.new(self, 10, 10)
+    @info_bar_text = "Herbivores: #{@herbies.size}     Carnivores: #{@carnies.size}" +\
+    "     Plants: #{$plants.size}     FPS: #{@fps}"
+    @info_bar = InfoBar.new(self, 250, 10, 30)
     
   end
   
@@ -36,7 +36,7 @@ class SimWindow < Gosu::Window
   def update_info_bar
     @fps = Gosu::fps
     @info_bar_text = "Herbivores: #{@herbies.size}   Carnivores: #{@carnies.size}" +\
-    "   Plants: #{$plants.size}   FPS: #{@fps}"
+    "     Plants: #{$plants.size}     FPS: #{@fps}"
   end
 
   def remove_starved_and_old_animals!
