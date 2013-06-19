@@ -1,0 +1,23 @@
+Herbivores vs Carnivores:
+ ☐ Make herbies
+   ✔ hungry @done (13-06-18 00:15)
+   ✔ eat @done (13-06-18 00:38)
+   ✔ age @done (13-06-18 00:15)
+   ✔ die @done (13-06-18 00:15)
+   ☐ mate
+   ☐ reproduce
+
+ ☐ Make carnies
+   ☐ exist
+   ☐ move
+   ☐ draw
+   ☐ hungry
+   ☐ eat
+   ☐ age
+   ☐ die
+   ☐ mate
+   ☐ reproduce
+
+ ✔ Create info bar @done (13-06-18 23:31)
+   ✔ Show numbers for animals and plants @done (13-06-18 23:31)
+   ✔ Show simulator FPS @done (13-06-18 23:31)
